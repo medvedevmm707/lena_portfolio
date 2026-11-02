@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Елена Медведева — Стилист</title>
+    <link rel="icon" href="logo.jpeg" type="image/jpeg">
+    <style>
+        /* Базовые настройки */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #222;
+            background-color: #fff;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3 { font-weight: 400; margin: 0 0 20px 0; }
+
+        /* Шапка */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 15px 40px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+            height: 70px;
+        }
+
+        .logo img { height: 35px; width: auto; display: block; }
+
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-menu a {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover { color: #777; }
+
+        .social-links { display: flex; gap: 20px; align-items: center; }
+        .social-links a {
+            color: #000;
+            transition: color 0.3s ease;
+            display: flex;
+        }
+        .social-links a:hover { color: #777; }
+
+        /* Главный экран */
+        .hero {
+            position: relative;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            background-image: url('main.jpeg');
+            background-size: cover;
+            background-position: center 70px;
+            background-attachment: fixed;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            text-align: left;
+            color: #fff;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 50px 60px;
+        }
+        
+        .hero-content h1 { font-size: 52px; letter-spacing: 2px; margin-bottom: 10px; }
+        .hero-content p { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* Секции */
+        .section-wrapper { padding: 80px 20px; }
+        .section-wrapper.alt-bg { background-color: #f8f8f8; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Образование */
+        .education-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .edu-item {
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 40px;
+            gap: 50px;
+        }
+        .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .edu-year { font-size: 36px; font-weight: 300; color: #888; min-width: 120px; line-height: 1; }
+        .edu-details { flex: 1; }
+        .edu-title { font-size: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .edu-subtitle { font-size: 16px; color: #666; line-height: 1.6; }
+
+        /* Услуги - Карточки с фоном */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .service-card {
+            background-color: #fff;
+            background-image: url('fon.jpeg');
+            background-size: cover;
+            background-position: center;
+            padding: 50px 30px;
+            border: 1px solid #eaeaea;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+        .service-decoration { width: 30px; height: 2px; background-color: #000; margin: 0 auto 25px auto; }
+        .service-title { font-size: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; position: relative; z-index: 2; }
+        .service-sublist { list-style: none; padding: 0; margin: 20px 0 0 0; flex-grow: 1; position: relative; z-index: 2; }
+        .service-sublist li { font-size: 15px; color: #555; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .service-sublist li:last-child { border-bottom: none; }
+        
+        .order-btn {
+            margin-top: 30px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        .order-btn:hover { background-color: #444; }
+
+        /* Портфолио */
+        .tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: none; font-size: 16px; text-transform: uppercase; cursor: pointer; padding: 5px 10px; color: #888; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+        .tab-btn:hover, .tab-btn.active { color: #000; border-bottom: 2px solid #000; }
+        .portfolio-content { display: none; }
+        .portfolio-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Сетка фотографий */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Названия брендов */
+        .brand-title {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+        .brand-title:first-child { margin-top: 0; }
+
+        /* Контакты */
+        .contact-info { text-align: center; font-size: 16px; }
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .contact-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 15px 40px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+        .contact-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Подвал (Footer) */
+        .site-footer {
+            background-color: #111;
+            color: #777;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        .site-footer p {
+            margin: 5px auto;
+            max-width: 800px;
+        }
+        .site-footer .footer-important {
+            margin-bottom: 15px;
+            color: #999;
+        }
+        .site-footer a {
+            color: #999;
+            text-decoration: none;
+            border-bottom: 1px solid #555;
+        }
+        .site-footer a:hover { color: #fff; border-bottom-color: #fff; }
+
+        /* Всплывающее окно (Модалка) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+        }
+        .close-modal:hover { color: #000; }
+        .modal-content h3 { font-size: 24px; margin-top: 0; margin-bottom: 5px; }
+        .modal-service-name { font-size: 14px; color: #666; margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        .modal-submit {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .modal-submit:hover { background-color: #444; }
+
+        /* Мобильная версия */
+        @media (max-width: 850px) {
+            header { padding: 15px; height: auto; flex-direction: column; gap: 15px; }
+            .hero { margin-top: 140px; height: calc(100vh - 140px); background-attachment: scroll; background-position: center top; }
+            .hero-content { padding: 30px 20px; }
+            .nav-menu { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .nav-menu a { font-size: 11px; }
+            .hero-content h1 { font-size: 36px; }
+            
+            .edu-item { flex-direction: column; gap: 15px; padding-bottom: 30px; }
+            .edu-year { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 5px; }
+            .service-card { padding: 40px 20px; }
+            .modal-content { padding: 30px 20px; }
+            
+            .photo-grid { grid-template-columns: 1fr; }
+            .contact-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="logo.jpeg" alt="Логотип Елены Медведевой">
+        </div>
+
+        <nav class="nav-menu">
+            <a href="#about">Обо мне</a>
+            <a href="#services">Услуги</a>
+            <a href="#portfolio">Портфолио</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <div class="social-links">
+            <a href="https://t.me/Ryzhuli88" target="_blank" title="Telegram">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+            <a href="mailto:ev.medvedeva.ev@gmail.com" title="Email">
+                <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Елена Медведева</h1>
+            <p>Стилист съёмок | Персональный стилист</p>
+        </div>
+    </div>
+
+    <div id="about" class="section-wrapper">
+        <div class="container">
+            <h2 class="section-title">Образование</h2>
+            <div class="education-timeline">
+                <div class="edu-item">
+                    <div class="edu-year">2025</div>
+                    <div class="edu-details">
+                        <div class="edu-title">Стилист fashion съемок</div>
+                        <div class="edu-subtitle">Fashion Factory School (Сертификат)</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-year">2024</div>
+                    <div class="edu-details">
+                        <div class="edu-title">Персональный стилист. Работа с частным клиентом</div>
+                        <div class="edu-subtitle">Московская академия дизайн-профессий «Пентаскул»<br>(Диплом ДПО)</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-year">2024</div>
+                    <div class="edu-details">
+                        <div class="edu-title">Тонкости работы с клиентами</div>
+                        <div class="edu-subtitle">Московская академия дизайн-профессий «Пентаскул»<br>(Сертификат)</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-year">2024</div>
+                    <div class="edu-details">
+                        <div class="edu-title">Шопинг со стилистом</div>
+                        <div class="edu-subtitle">Московская академия дизайн-профессий «Пентаскул»<br>(Сертификат)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="services" class="section-wrapper alt-bg">
+        <div class="container">
+            <h2 class="section-title">Услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-decoration"></div>
+                    <div class="service-title">Стилизация съемок</div>
+                    <div style="flex-grow: 1;"></div>
+                    <button class="order-btn" onclick="openModal('Стилизация съемок')">Оставить заявку</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-decoration"></div>
+                    <div class="service-title">Продюсирование съемок</div>
+                    <div style="flex-grow: 1;"></div>
+                    <button class="order-btn" onclick="openModal('Продюсирование съемок')">Оставить заявку</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-decoration"></div>
+                    <div class="service-title">Персональный стайлинг</div>
+                    <ul class="service-sublist">
+                        <li>Разбор гардероба</li>
+                        <li>Шопинг-сопровождение</li>
+                        <li>Образ/капсула под запрос</li>
+                    </ul>
+                    <button class="order-btn" onclick="openModal('Персональный стайлинг')">Оставить заявку</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="portfolio" class="section-wrapper">
+        <div class="container">
+            <h2 class="section-title">Портфолио</h2>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('shoots')">Съемки</button>
+                <button class="tab-btn" onclick="openTab('brands')">Бренды</button>
+                <button class="tab-btn" onclick="openTab('bloggers')">Блогеры | Артисты</button>
+                <button class="tab-btn" onclick="openTab('tv')">ТВ</button>
+            </div>
+            
+            <div id="shoots" class="portfolio-content active">
+                <div class="photo-grid">
+                    <img src="filming/1.jpeg" alt="Съемка 1">
+                    <img src="filming/2.jpeg" alt="Съемка 2">
+                    <img src="filming/3.jpeg" alt="Съемка 3">
+                    <img src="filming/4.jpeg" alt="Съемка 4">
+                    <img src="filming/5.jpeg" alt="Съемка 5">
+                    <img src="filming/6.jpeg" alt="Съемка 6">
+                    <img src="filming/7.jpeg" alt="Съемка 7">
+                    <img src="filming/8.jpg" alt="Съемка 8">
+                    <img src="filming/9.jpg" alt="Съемка 9">
+                    <img src="filming/10.jpg" alt="Съемка 10">
+                    <img src="filming/11.jpg" alt="Съемка 11">
+                    <img src="filming/12.jpg" alt="Съемка 12">
+                    <img src="filming/13.jpg" alt="Съемка 13">
+                    <img src="filming/14.jpg" alt="Съемка 14">
+                    <img src="filming/15.jpg" alt="Съемка 15">
+                    <img src="filming/16.jpg" alt="Съемка 16">
+                    <img src="filming/17.jpg" alt="Съемка 17">
+                    <img src="filming/18.jpg" alt="Съемка 18">
+                    <img src="filming/19.jpg" alt="Съемка 19">
+                    <img src="filming/20.jpg" alt="Съемка 20">
+                    <img src="filming/21.jpg" alt="Съемка 21">
+                    <img src="filming/22.jpg" alt="Съемка 22">
+                    <img src="filming/23.jpg" alt="Съемка 23">
+                    <img src="filming/24.jpg" alt="Съемка 24">
+                    <img src="filming/25.jpg" alt="Съемка 25">
+                    <img src="filming/26.jpg" alt="Съемка 26">
+                    <img src="filming/27.jpg" alt="Съемка 27">
+                </div>
+            </div>
+            
+            <div id="brands" class="portfolio-content">
+                <div class="brand-title">AnyÁmo</div>
+                <div class="photo-grid">
+                    <img src="brends/AnyAmo/1.jpeg" alt="AnyAmo 1">
+                    <img src="brends/AnyAmo/2.PNG" alt="AnyAmo 2">
+                    <img src="brends/AnyAmo/3.jpeg" alt="AnyAmo 3">
+                    <img src="brends/AnyAmo/4.jpg" alt="AnyAmo 4">
+                    <img src="brends/AnyAmo/5.jpg" alt="AnyAmo 5">
+                    <img src="brends/AnyAmo/6.jpg" alt="AnyAmo 6">
+                    <img src="brends/AnyAmo/7.jpg" alt="AnyAmo 7">
+                    <img src="brends/AnyAmo/8.jpeg" alt="AnyAmo 8">
+                    <img src="brends/AnyAmo/9.jpeg" alt="AnyAmo 9">
+                    <img src="brends/AnyAmo/10.jpeg" alt="AnyAmo 10">
+                    <img src="brends/AnyAmo/11.jpeg" alt="AnyAmo 11">
+                    <img src="brends/AnyAmo/12.jpeg" alt="AnyAmo 12">
+                    <img src="brends/AnyAmo/13.jpeg" alt="AnyAmo 13">
+                    <img src="brends/AnyAmo/14.jpeg" alt="AnyAmo 14">
+                </div>
+
+                <div class="brand-title">Persve</div>
+                <div class="photo-grid">
+                    <img src="brends/Persve/1.jpg" alt="Persve 1">
+                    <img src="brends/Persve/2.jpg" alt="Persve 2">
+                    <img src="brends/Persve/3.jpg" alt="Persve 3">
+                </div>
+            </div>
+
+            <div id="bloggers" class="portfolio-content">
+                <div class="photo-grid">
+                    <img src="bloger/1.jpg" alt="Блогер 1">
+                    <img src="bloger/2.jpg" alt="Блогер 2">
+                    <img src="bloger/3.jpg" alt="Блогер 3">
+                    <img src="bloger/4.jpg" alt="Блогер 4">
+                    <img src="bloger/5.jpg" alt="Блогер 5">
+                    <img src="bloger/6.jpg" alt="Блогер 6">
+                    <img src="bloger/7.jpg" alt="Блогер 7">
+                    <img src="bloger/8.jpg" alt="Блогер 8">
+                    <img src="bloger/9.jpg" alt="Блогер 9">
+                </div>
+            </div>
+
+            <div id="tv" class="portfolio-content">
+                <p style="text-align: center; margin-bottom: 30px; font-size: 18px;"><strong>Ассистент художника по костюмам</strong></p>
+                <div class="photo-grid">
+                    <img src="tv/1.jpeg" alt="ТВ 1">
+                    <img src="tv/2.jpeg" alt="ТВ 2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contacts" class="section-wrapper alt-bg">
+        <div class="container contact-info">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-buttons">
+                <a href="https://t.me/Ryzhuli88" target="_blank" class="contact-btn">Telegram</a>
+                <a href="mailto:ev.medvedeva.ev@gmail.com" class="contact-btn">Email</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p class="footer-important">Все сведения, содержащиеся на сайте, носят ознакомительный характер.<br>Информация не является публичной офертой, определяемой положениями Статьи 437 Гражданского кодекса РФ.</p>
+            <p>Оставляя заявку через форму на сайте, вы даете согласие на обработку своих персональных данных.</p>
+            <p style="margin-top: 25px;">
+                Стилист Елена Медведева <br>
+                <a href="mailto:ev.medvedeva.ev@gmail.com">ev.medvedeva.ev@gmail.com</a>
+            </p>
+            <p style="margin-top: 10px;">&copy; 2026 Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно -->
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Ваш заказ:</h3>
+            <div id="selectedService" class="modal-service-name">Услуга</div>
+            
+            <form onsubmit="sendEmail(event)">
+                <input type="text" id="clientName" placeholder="Имя" required>
+                <input type="text" id="clientContact" placeholder="Email или Телефон" required>
+                <button type="submit" class="modal-submit">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Сброс прокрутки при обновлении
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        // Убираем якорь из URL и прокручиваем наверх
+        if (window.location.hash) {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 10);
+
+        function openTab(tabName) {
+            var i;
+            var content = document.getElementsByClassName("portfolio-content");
+            var btns = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < content.length; i++) {
+                content[i].classList.remove("active");
+            }
+            for (i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+
+        let currentServiceTitle = "";
+
+        function openModal(serviceName) {
+            currentServiceTitle = serviceName;
+            document.getElementById("selectedService").innerText = serviceName;
+            document.getElementById("orderModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("orderModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("orderModal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            let name = document.getElementById("clientName").value;
+            let contact = document.getElementById("clientContact").value;
+            
+            let subject = encodeURIComponent("Заявка с сайта: " + currentServiceTitle);
+            let body = encodeURIComponent("Здравствуйте, Лена!\n\nХочу заказать услугу: " + currentServiceTitle + "\nМеня зовут: " + name + "\nМой контакт для связи: " + contact);
+            
+            window.location.href = "mailto:ev.medvedeva.ev@gmail.com?subject=" + subject + "&body=" + body;
+            
+            closeModal();
+        }
+    </script>
+</body>
+</html>
